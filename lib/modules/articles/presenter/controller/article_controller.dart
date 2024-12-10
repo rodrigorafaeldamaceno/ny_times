@@ -22,10 +22,17 @@ abstract class _ArticleControllerBase with Store {
   Future<void> getPopularArticles({
     required int interval,
   }) async {
-    final data = await _getPopularArticles(interval: interval);
+    final response = await _getPopularArticles(interval: interval);
 
-    articles.clear();
-    articles.addAll(data);
+    response.fold(
+      (error) {
+        print(error);
+      },
+      (success) {
+        articles.clear();
+        articles.addAll(success);
+      },
+    );
   }
 
   @action

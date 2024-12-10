@@ -38,6 +38,7 @@ dependencies:
   dio: ^5.7.0
   mobx: ^2.2.3
   flutter_mobx: ^2.2.0+1
+  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:
