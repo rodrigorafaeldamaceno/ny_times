@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:ny_times/modules/articles/domain/entities/article_entity.dart';
 import 'package:ny_times/modules/articles/domain/usecases/get_popular_articles.dart';
@@ -16,6 +17,8 @@ class ArticlesPage extends StatefulWidget {
 class _ArticlesPageState extends State<ArticlesPage> {
   final controller = Modular.get<ArticleController>();
 
+  bool isDesc = false;
+
   @override
   void initState() {
     super.initState();
@@ -32,9 +35,15 @@ class _ArticlesPageState extends State<ArticlesPage> {
       appBar: AppBar(
         title: const Text('NY Times'),
       ),
-      body: ListenableBuilder(
-        listenable: controller,
-        builder: (context, widget) {
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          controller.sortArticles(isDesc);
+          isDesc = !isDesc;
+        },
+        child: const Icon(Icons.sort),
+      ),
+      body: Observer(
+        builder: (context) {
           return ListView.builder(
             itemCount: controller.articles.length,
             itemBuilder: (BuildContext context, int index) {
